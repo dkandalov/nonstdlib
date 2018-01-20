@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dkandalov/kotlincommon.svg?branch=master)](https://travis-ci.org/dkandalov/kotlincommon)
+[![Build Status](https://travis-ci.org/dkandalov/kotlin-common.svg?branch=master)](https://travis-ci.org/dkandalov/kotlin-common)
 
 ### Step 1
 Add dependency to `build.gradle`:
