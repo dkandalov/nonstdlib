@@ -33,10 +33,6 @@ fun <E> Iterable<E>.skip(n: Int): Iterable<E> {
     }
 }
 
-fun <E> List<E>.sliding(windowSize: Int): List<List<E>> {
-    return (0..(size - windowSize)).map { subList(it, it + windowSize) }
-}
-
 fun <E> Iterable<E>.tail() = drop(1)
 
 fun String.tail() = drop(1)

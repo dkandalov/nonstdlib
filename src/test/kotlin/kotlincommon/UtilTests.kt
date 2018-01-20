@@ -1,19 +1,11 @@
+
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import kotlincommon.permutations
 import kotlincommon.skip
-import kotlincommon.sliding
 import org.junit.Test
 
 class UtilTests {
-    @Test fun `sliding window`() {
-        listOf<Int>().sliding(2) shouldEqual listOf()
-        listOf(1).sliding(2) shouldEqual listOf()
-        listOf(1, 2).sliding(2) shouldEqual listOf(listOf(1, 2))
-        listOf(1, 2, 3).sliding(2) shouldEqual listOf(listOf(1, 2), listOf(2, 3))
-        listOf(1, 2, 3, 4).sliding(2) shouldEqual listOf(listOf(1, 2), listOf(2, 3), listOf(3, 4))
-        listOf(1, 2, 3, 4).sliding(3) shouldEqual listOf(listOf(1, 2, 3), listOf(2, 3, 4))
-    }
 
     @Test fun `skipping elements`() {
         listOf(1, 2, 3).skip(0).toList() shouldEqual listOf(1, 2, 3)
