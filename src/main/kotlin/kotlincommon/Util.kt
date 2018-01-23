@@ -4,6 +4,7 @@ package kotlincommon
 
 import java.time.Duration
 import java.time.temporal.ChronoUnit
+import kotlin.coroutines.experimental.buildSequence
 
 
 fun <T> T.printed(f: (T) -> String = { it.toString() }): T {
@@ -39,10 +40,30 @@ fun String.tail() = drop(1)
 
 operator fun String.times(size: Int) = 0.until(size).map { this }.joinToString("")
 
+
+fun <T, R> List<T>.chunkedBy(f: (T) -> R): List<List<T>> = asSequence().chunkedBy(f).toList()
+
+fun <T, R> Iterator<T>.chunkedBy(f: (T) -> R): Iterator<List<T>> = asSequence().chunkedBy(f).iterator()
+
+fun <T, R> Sequence<T>.chunkedBy(f: (T) -> R): Sequence<List<T>> = buildSequence {
+    var lastKey: R? = null
+    var list = ArrayList<T>()
+    forEach { item ->
+        val key = f(item)
+        if (key != lastKey) {
+            lastKey = key
+            if (list.isNotEmpty()) yield(list)
+            list = ArrayList()
+        }
+        list.add(item)
+    }
+    if (list.isNotEmpty()) yield(list)
+}
+
 fun <E> List<E>.permutations(): List<List<E>> =
     if (size <= 1) listOf(this)
     else flatMap { item ->
-        (this - item).permutations().map { it: List<E> -> listOf(item) + it }
+        (this - item).permutations().map { list -> listOf(item) + list }
     }.distinct()
 
 fun measureTimeMillis(block: () -> Unit): Duration {

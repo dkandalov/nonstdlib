@@ -1,13 +1,14 @@
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
+import kotlincommon.chunkedBy
 import kotlincommon.permutations
 import kotlincommon.skip
 import org.junit.Test
 
 class UtilTests {
 
-    @Test fun `skipping elements`() {
+    @Test fun `iterator with skipped elements`() {
         listOf(1, 2, 3).skip(0).toList() shouldEqual listOf(1, 2, 3)
         listOf(1, 2, 3).skip(1).toList() shouldEqual listOf(2, 3)
         listOf(1, 2, 3).skip(2).toList() shouldEqual listOf(3)
@@ -26,6 +27,19 @@ class UtilTests {
             listOf(2, 3, 1),
             listOf(3, 1, 2),
             listOf(3, 2, 1)
+        )
+    }
+
+    @Test fun `chunk list according to selector function`() {
+        fun isEven(n: Int) = n % 2 == 0
+
+        listOf<Int>().chunkedBy(::isEven) shouldEqual listOf()
+        listOf(1).chunkedBy(::isEven) shouldEqual listOf(listOf(1))
+        listOf(1, 2).chunkedBy(::isEven) shouldEqual listOf(listOf(1), listOf(2))
+        listOf(1, 2, 2, 4, 3, 1).chunkedBy(::isEven) shouldEqual listOf(
+            listOf(1),
+            listOf(2, 2, 4),
+            listOf(3, 1)
         )
     }
 }
