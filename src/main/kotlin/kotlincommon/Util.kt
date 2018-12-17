@@ -5,11 +5,24 @@ package kotlincommon
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 import kotlin.coroutines.experimental.buildSequence
+import kotlin.math.pow
 
 
 fun <T> T.printed(f: (T) -> String = { it.toString() }): T {
     println(f(this))
     return this
+}
+
+fun <T> Array<T>.swap(index1: Int, index2: Int) {
+    val tmp = this[index1]
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
+
+fun <T> MutableList<T>.swap(index1: Int, index2: Int) {
+    val tmp = this[index1]
+    this[index1] = this[index2]
+    this[index2] = tmp
 }
 
 fun <T> Iterable<T>.join(
@@ -20,25 +33,25 @@ fun <T> Iterable<T>.join(
     truncated: CharSequence = "...",
     transform: ((T) -> CharSequence)? = null
 ): String {
-    return this.joinToString(separator, prefix, postfix, limit, truncated, transform)
+    return joinToString(separator, prefix, postfix, limit, truncated, transform)
 }
 
-fun <E> Iterable<E>.skip(n: Int): Iterable<E> {
+fun <T> Iterable<T>.skip(n: Int): Iterable<T> {
     val iterator = iterator()
     0.until(n).forEach {
         if (!iterator.hasNext()) throw IllegalStateException()
         iterator.next()
     }
-    return object: Iterable<E> {
+    return object: Iterable<T> {
         override fun iterator() = iterator
     }
 }
 
-fun <E> Iterable<E>.tail() = drop(1)
+fun <T> Iterable<T>.tail(): Iterable<T> = drop(1)
 
-fun String.tail() = drop(1)
+fun String.tail(): String = drop(1)
 
-operator fun String.times(size: Int) = 0.until(size).map { this }.joinToString("")
+operator fun String.times(size: Int): String = 0.until(size).join("") { this }
 
 
 fun <T, R> List<T>.chunkedBy(f: (T) -> R): List<List<T>> = asSequence().chunkedBy(f).toList()
@@ -75,8 +88,11 @@ fun byteArray(vararg bytes: Byte): ByteArray = bytes
 
 fun byteList(vararg bytes: Byte): List<Byte> = bytes.toList()
 
-private fun Int.toBinaryString() = Integer.toBinaryString(this).padStart(32, '0')
+fun Int.toBinaryString(): String = Integer.toBinaryString(this).padStart(32, '0')
 
-private fun ByteArray.toBinaryString() = this
-    .map { Integer.toBinaryString(it.toInt().and(0xFF)).padStart(8, '0') }
-    .joinToString("")
+fun ByteArray.toBinaryString(): String =
+    joinToString("") { Integer.toBinaryString(it.toInt().and(0xFF)).padStart(8, '0') }
+
+fun Int.pow(n: Int): Int = this.toDouble().pow(n.toDouble()).toInt()
+
+fun Long.pow(n: Long): Long = this.toDouble().pow(n.toDouble()).toLong()
