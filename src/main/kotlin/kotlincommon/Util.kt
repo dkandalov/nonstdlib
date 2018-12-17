@@ -2,8 +2,6 @@
 
 package kotlincommon
 
-import java.time.Duration
-import java.time.temporal.ChronoUnit
 import kotlin.coroutines.experimental.buildSequence
 import kotlin.math.pow
 

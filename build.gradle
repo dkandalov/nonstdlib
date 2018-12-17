@@ -48,11 +48,11 @@ artifacts {
 task publishJars(dependsOn:build) {
 	doLast {
 		ant.copy(
-			file:"build/libs/kotlin-common-0.1.jar",
-			toFile:"dkandalov-kotlin-common-0.1.jar"
+			file:"build/libs/kotlin-common-${version}.jar",
+			toFile:"jars/dkandalov-kotlin-common-${version}.jar"
 		)
 		ant.copy(
-			file:"build/libs/kotlin-common-0.1-sources.jar",
-			toFile:"dkandalov-kotlin-common-0.1-sources.jar"
+			file:"build/libs/kotlin-common-${version}-sources.jar",
+			toFile:"jars/dkandalov-kotlin-common-${version}-sources.jar"
 		)
 }}
