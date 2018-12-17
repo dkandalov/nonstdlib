@@ -79,11 +79,6 @@ fun <E> List<E>.permutations(): List<List<E>> =
         (this - item).permutations().map { list -> listOf(item) + list }
     }.distinct()
 
-fun measureTimeMillis(block: () -> Unit): Duration {
-    val millis = kotlin.system.measureTimeMillis(block)
-    return Duration.of(millis, ChronoUnit.MILLIS)
-}
-
 fun byteArray(vararg bytes: Byte): ByteArray = bytes
 
 fun byteList(vararg bytes: Byte): List<Byte> = bytes.toList()
