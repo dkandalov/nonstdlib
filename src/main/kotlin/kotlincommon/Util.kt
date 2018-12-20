@@ -2,14 +2,17 @@
 
 package kotlincommon
 
-import kotlin.coroutines.experimental.buildSequence
 import kotlin.math.pow
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 
 fun <T> T.printed(f: (T) -> String = { it.toString() }): T {
     println(f(this))
     return this
 }
+
+fun <T> Collection<T>.doesNotContain(t: T): Boolean = !this.contains(t)
 
 fun <T> Array<T>.swap(index1: Int, index2: Int) {
     val tmp = this[index1]
@@ -47,6 +50,8 @@ fun <T> Iterable<T>.skip(n: Int): Iterable<T> {
 
 fun <T> Iterable<T>.tail(): Iterable<T> = drop(1)
 
+fun <T> List<T>.tail(): List<T> = drop(1)
+
 fun String.tail(): String = drop(1)
 
 operator fun String.times(size: Int): String = 0.until(size).join("") { this }
@@ -56,7 +61,7 @@ fun <T, R> List<T>.chunkedBy(f: (T) -> R): List<List<T>> = asSequence().chunkedB
 
 fun <T, R> Iterator<T>.chunkedBy(f: (T) -> R): Iterator<List<T>> = asSequence().chunkedBy(f).iterator()
 
-fun <T, R> Sequence<T>.chunkedBy(f: (T) -> R): Sequence<List<T>> = buildSequence {
+fun <T, R> Sequence<T>.chunkedBy(f: (T) -> R): Sequence<List<T>> = sequence {
     var lastKey: R? = null
     var list = ArrayList<T>()
     forEach { item ->
@@ -89,3 +94,9 @@ fun ByteArray.toBinaryString(): String =
 fun Int.pow(n: Int): Int = this.toDouble().pow(n.toDouble()).toInt()
 
 fun Long.pow(n: Long): Long = this.toDouble().pow(n.toDouble()).toLong()
+
+fun Random.listOfInts(sizeRange: IntRange, valuesRange: IntRange = IntRange(Int.MIN_VALUE, Int.MAX_VALUE)): List<Int> {
+    return 0.until(nextInt(sizeRange)).map {
+        nextInt(valuesRange)
+    }
+}
