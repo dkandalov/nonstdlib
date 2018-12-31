@@ -1,18 +1,27 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 
 package kotlincommon
 
+import java.math.BigInteger
 import kotlin.math.pow
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 
-fun <T> T.printed(f: (T) -> String = { it.toString() }): T {
-    println(f(this))
+fun <T> T.printed(prefix: String = "", f: (T) -> String = { it.toString() }): T {
+    println(prefix + f(this))
     return this
 }
 
-fun <T> Collection<T>.doesNotContain(t: T): Boolean = !this.contains(t)
+fun println(first: Any, second: Any, vararg rest: Any) {
+    println((listOf(first, second) + rest).joinToString(", "))
+}
+
+inline fun <T, R> T.ifNotNull(f: (T) -> R) = this?.let(f)
+
+inline fun <T> Iterable<T>.doesNotContain(element: T): Boolean = !contains(element)
+
+inline fun <K, V> Map<K, V>.doesNotContain(key: K): Boolean = !contains(key)
 
 fun <T> Array<T>.swap(index1: Int, index2: Int) {
     val tmp = this[index1]
@@ -95,8 +104,21 @@ fun Int.pow(n: Int): Int = this.toDouble().pow(n.toDouble()).toInt()
 
 fun Long.pow(n: Long): Long = this.toDouble().pow(n.toDouble()).toLong()
 
-fun Random.listOfInts(sizeRange: IntRange, valuesRange: IntRange = IntRange(Int.MIN_VALUE, Int.MAX_VALUE)): List<Int> {
-    return 0.until(nextInt(sizeRange)).map {
+tailrec fun Int.intFactorial(result: Int = 1): Int =
+    if (this <= 1) result
+    else (this - 1).intFactorial(result * this)
+
+tailrec fun Int.longFactorial(result: Long = 1): Long =
+    if (this <= 1) result
+    else (this - 1).longFactorial(result * this)
+
+fun Int.factorial(): BigInteger = BigInteger(this.toString()).factorial()
+
+tailrec fun BigInteger.factorial(result: BigInteger = BigInteger.ONE): BigInteger =
+    if (this <= BigInteger.ONE) result
+    else (this - BigInteger.ONE).factorial(result * this)
+
+fun Random.listOfInts(sizeRange: IntRange, valuesRange: IntRange = IntRange(Int.MIN_VALUE, Int.MAX_VALUE)): List<Int> =
+    0.until(nextInt(sizeRange)).map {
         nextInt(valuesRange)
     }
-}

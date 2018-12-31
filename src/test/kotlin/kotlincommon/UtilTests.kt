@@ -1,10 +1,8 @@
-
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
-import kotlincommon.chunkedBy
-import kotlincommon.permutations
-import kotlincommon.skip
+import kotlincommon.*
 import org.junit.Test
+import java.math.BigInteger
 
 class UtilTests {
 
@@ -41,6 +39,19 @@ class UtilTests {
             listOf(2, 2, 4),
             listOf(3, 1)
         )
+    }
+
+    @Test fun `factorial calculations for Int and Long`() {
+        val input = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
+        val factorials = listOf(1, 1, 2, 6, 24, 120, 720, 5040, 40320)
+
+        input.map { it.intFactorial() } shouldEqual factorials
+        input.map { it.longFactorial() } shouldEqual factorials.map(Int::toLong)
+        input.map { it.factorial() } shouldEqual factorials.map(Int::toBigInteger)
+    }
+
+    @Test fun `factorial calculations for BigInteger`() {
+        100.toBigInteger().factorial() shouldEqual BigInteger("93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000")
     }
 }
 
