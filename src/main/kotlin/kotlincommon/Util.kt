@@ -85,12 +85,6 @@ fun <T, R> Sequence<T>.chunkedBy(f: (T) -> R): Sequence<List<T>> = sequence {
     if (list.isNotEmpty()) yield(list)
 }
 
-fun <E> List<E>.permutations(): List<List<E>> =
-    if (size <= 1) listOf(this)
-    else flatMap { item ->
-        (this - item).permutations().map { list -> listOf(item) + list }
-    }.distinct()
-
 fun byteArray(vararg bytes: Byte): ByteArray = bytes
 
 fun byteList(vararg bytes: Byte): List<Byte> = bytes.toList()
@@ -118,7 +112,42 @@ tailrec fun BigInteger.factorial(result: BigInteger = BigInteger.ONE): BigIntege
     if (this <= BigInteger.ONE) result
     else (this - BigInteger.ONE).factorial(result * this)
 
-fun Random.listOfInts(sizeRange: IntRange, valuesRange: IntRange = IntRange(Int.MIN_VALUE, Int.MAX_VALUE)): List<Int> =
-    0.until(nextInt(sizeRange)).map {
-        nextInt(valuesRange)
+fun Random.listOfInts(
+    size: Int = -1,
+    sizeRange: IntRange = IntRange.EMPTY,
+    valuesRange: IntRange = IntRange(Int.MIN_VALUE, Int.MAX_VALUE)
+): List<Int> {
+    require(size == -1 && sizeRange.isEmpty()) { "`size` or `sizeRange` must be specified" }
+    val listSize = if (size != -1) size else nextInt(sizeRange)
+    return 0.until(listSize).map { nextInt(valuesRange) }
+}
+
+inline fun <T> Iterable<T>.sumByLong(selector: (T) -> Long): Long {
+    var sum = 0L
+    for (element in this) {
+        sum += selector(element)
     }
+    return sum
+}
+
+inline fun <E> Iterable<E>.permutations(): List<List<E>> = toList().permutationsSequence().toList()
+
+inline fun <E> List<E>.permutations(): List<List<E>> = permutationsSequence().toList()
+
+/**
+ * https://en.wikipedia.org/wiki/Permutation#Generation_in_lexicographic_order
+ * https://www.nayuki.io/page/next-lexicographical-permutation-algorithm
+ */
+fun <E> List<E>.permutationsSequence(): Sequence<List<E>> = sequence {
+    val values = this@permutationsSequence
+    val list = indices.toMutableList()
+    yield(list.map { values[it] })
+
+    while (true) {
+        val i = list.indices.windowed(2).findLast { (i1, i2) -> list[i1] < list[i2] }?.first() ?: break
+        val j = IntRange(i + 1, list.size - 1).findLast { list[i] < list[it] }!!
+        list.swap(i, j)
+        list.subList(i + 1, list.size).reverse()
+        yield(list.map { values[it] })
+    }
+}
