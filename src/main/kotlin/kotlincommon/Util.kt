@@ -117,9 +117,13 @@ fun Random.listOfInts(
     sizeRange: IntRange = IntRange.EMPTY,
     valuesRange: IntRange = IntRange(Int.MIN_VALUE, Int.MAX_VALUE)
 ): List<Int> {
-    require(size == -1 && sizeRange.isEmpty()) { "`size` or `sizeRange` must be specified" }
-    val listSize = if (size != -1) size else nextInt(sizeRange)
-    return 0.until(listSize).map { nextInt(valuesRange) }
+    require(size != -1 || !sizeRange.isEmpty()) { "`size` or `sizeRange` must be specified (but not both)" }
+    val result = ArrayList<Int>()
+    var i = if (size != -1) size else nextInt(sizeRange)
+    while (i-- > 0) {
+        result.add(nextInt(valuesRange))
+    }
+    return result
 }
 
 inline fun <T> Iterable<T>.sumByLong(selector: (T) -> Long): Long {

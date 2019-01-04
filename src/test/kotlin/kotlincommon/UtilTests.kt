@@ -2,6 +2,7 @@ import kotlincommon.*
 import kotlincommon.test.shouldEqual
 import org.junit.Test
 import java.math.BigInteger
+import kotlin.random.Random
 
 class UtilTests {
 
@@ -60,5 +61,16 @@ class UtilTests {
             listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20),
             listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 19)
         )
+    }
+
+    @Test fun `random list of Ints`() {
+        Random.listOfInts(size = 3, valuesRange = 0..10).let { list ->
+            list.size shouldEqual 3
+            list.all { it in 0..10 }
+        }
+        Random.listOfInts(sizeRange = 0..10, valuesRange = 0..10).let { list ->
+            (list.size in 0..10) shouldEqual true
+            list.all { it in 0..10 }
+        }
     }
 }
