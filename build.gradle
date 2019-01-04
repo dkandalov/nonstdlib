@@ -9,19 +9,23 @@ buildscript {
 }
 
 group "dkandalov"
-version "0.1.3"
+version "0.1.4"
 
 apply plugin:"kotlin"
 
 repositories {
 	mavenCentral()
+    ivy {
+        layout "pattern"
+        artifactPattern "http://raw.githubusercontent.com/dkandalov/kotlin-common-test/master/jars/[organisation]-[artifact]-[revision](-[classifier])(.[ext])"
+    }
 }
 
 dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 	testCompile "junit:junit:4.12"
-	testCompile "com.natpryce:hamkrest:1.4.0.0"
+	testCompile "dkandalov:kotlin-common-test:0.1.2"
 }
 
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
