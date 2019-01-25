@@ -3,18 +3,19 @@
 package kotlincommon
 
 import java.math.BigInteger
+import java.util.*
 import kotlin.math.pow
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 
-fun <T> T.printed(prefix: String = "", f: (T) -> String = { it.toString() }): T {
+fun <T> T.printed(prefix: String = "", f: (T) -> String = { it.toPrintableString() }): T {
     println(prefix + f(this))
     return this
 }
 
 fun println(first: Any, second: Any, vararg rest: Any) {
-    println((listOf(first, second) + rest).joinToString(", "))
+    println((listOf(first, second) + rest).joinToString(", ") { it.toPrintableString() })
 }
 
 inline fun <T, R> T.ifNotNull(f: (T) -> R) = this?.let(f)
@@ -155,3 +156,17 @@ fun <E> List<E>.permutationsSequence(): Sequence<List<E>> = sequence {
         yield(list.map { values[it] })
     }
 }
+
+private fun Any?.toPrintableString(): String =
+    when {
+        this is Array<*>     -> Arrays.toString(this)
+        this is BooleanArray -> Arrays.toString(this)
+        this is ByteArray    -> Arrays.toString(this)
+        this is CharArray    -> Arrays.toString(this)
+        this is ShortArray   -> Arrays.toString(this)
+        this is IntArray     -> Arrays.toString(this)
+        this is LongArray    -> Arrays.toString(this)
+        this is FloatArray   -> Arrays.toString(this)
+        this is DoubleArray  -> Arrays.toString(this)
+        else                 -> this.toString()
+    }
