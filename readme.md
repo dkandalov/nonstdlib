@@ -1,18 +1,13 @@
-[![Build Status](https://travis-ci.org/dkandalov/kotlin-common.svg?branch=master)](https://travis-ci.org/dkandalov/kotlin-common)
+[![Build Status](https://travis-ci.org/dkandalov/nonstdlib.svg?branch=master)](https://travis-ci.org/dkandalov/nonstdlib)
 
 ### Step 1
 Add dependency to `build.gradle`:
 ```
 repositories {
-	mavenCentral()
-	ivy {
-		layout "pattern"
-		artifactPattern "http://raw.githubusercontent.com/dkandalov/kotlin-common/master/[organisation]-[artifact]-[revision](-[classifier])(.[ext])"
-	}
+	maven { url "https://dl.bintray.com/dkandalov/maven" }
 }
-
 dependencies {
-	compile "dkandalov:kotlin-common:0.1"
+	compile "nonstdlib:nonstdlib:0.1"
 }
 ```
 
