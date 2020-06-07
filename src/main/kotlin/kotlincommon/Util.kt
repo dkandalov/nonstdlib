@@ -8,6 +8,7 @@ import kotlin.math.pow
 import kotlin.random.Random
 import kotlin.random.nextInt
 
+val String.size: Int get() = length
 
 fun <T> T.printed(prefix: String = "", f: (T) -> String = { it.toPrintableString() }): T {
     println(prefix + f(this))
@@ -49,11 +50,11 @@ fun <T> Iterable<T>.join(
 
 fun <T> Iterable<T>.skip(n: Int): Iterable<T> {
     val iterator = iterator()
-    0.until(n).forEach {
+    repeat(times = n) {
         if (!iterator.hasNext()) throw IllegalStateException()
         iterator.next()
     }
-    return object: Iterable<T> {
+    return object : Iterable<T> {
         override fun iterator() = iterator
     }
 }
@@ -158,15 +159,15 @@ fun <E> List<E>.permutationsSequence(): Sequence<List<E>> = sequence {
 }
 
 private fun Any?.toPrintableString(): String =
-    when {
-        this is Array<*>     -> Arrays.toString(this)
-        this is BooleanArray -> Arrays.toString(this)
-        this is ByteArray    -> Arrays.toString(this)
-        this is CharArray    -> Arrays.toString(this)
-        this is ShortArray   -> Arrays.toString(this)
-        this is IntArray     -> Arrays.toString(this)
-        this is LongArray    -> Arrays.toString(this)
-        this is FloatArray   -> Arrays.toString(this)
-        this is DoubleArray  -> Arrays.toString(this)
-        else                 -> this.toString()
+    when (this) {
+        is Array<*>     -> Arrays.toString(this)
+        is BooleanArray -> Arrays.toString(this)
+        is ByteArray    -> Arrays.toString(this)
+        is CharArray    -> Arrays.toString(this)
+        is ShortArray   -> Arrays.toString(this)
+        is IntArray     -> Arrays.toString(this)
+        is LongArray    -> Arrays.toString(this)
+        is FloatArray   -> Arrays.toString(this)
+        is DoubleArray  -> Arrays.toString(this)
+        else            -> this.toString()
     }

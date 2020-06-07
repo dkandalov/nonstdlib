@@ -36,7 +36,7 @@ object Durations {
 
     init {
         Runtime.getRuntime().addShutdownHook(Thread {
-            callbackByKey.forEach { key, callback ->
+            callbackByKey.forEach { (key, callback) ->
                 callback(key, durationByKey[key]!!)
             }
         })
