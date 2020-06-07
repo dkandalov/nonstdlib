@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     java
@@ -22,4 +23,25 @@ dependencies {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "11"
+}
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("nonstdlib") {
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            url = URI("https://api.bintray.com/maven/dkandalov/maven/nonstdlib/;publish=1")
+            credentials {
+                username = System.getenv("BINTRAY_USER")
+                password = System.getenv("BINTRAY_API_KEY")
+            }
+        }
+    }
 }
