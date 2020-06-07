@@ -8,9 +8,8 @@ buildscript {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 	}
 }
-
-group "dkandalov"
-version "0.1.5"
+group "nonstdlib"
+version "0.1"
 
 apply plugin:"kotlin"
 

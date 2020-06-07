@@ -1,6 +1,6 @@
 @file:Suppress("unused", "NOTHING_TO_INLINE")
 
-package kotlincommon
+package nonstdlib
 
 import java.math.BigInteger
 import java.util.*

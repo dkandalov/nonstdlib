@@ -1,5 +1,5 @@
 import datsok.shouldEqual
-import kotlincommon.*
+import nonstdlib.*
 import org.junit.Test
 import java.math.BigInteger
 import kotlin.random.Random

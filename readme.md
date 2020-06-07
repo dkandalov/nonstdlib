@@ -17,7 +17,7 @@ dependencies {
 ```
 
 ### Step 2
-Use code from `kotlincommon` package, e.g.
+Use code from `nonstdlib` package, e.g.
 ```
 (1 + 2).printed()
 ```

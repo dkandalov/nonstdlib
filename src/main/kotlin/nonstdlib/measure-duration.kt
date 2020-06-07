@@ -1,9 +1,9 @@
 @file:Suppress("unused")
 
-package kotlincommon
+package nonstdlib
 
-import kotlincommon.Durations.callbackByKey
-import kotlincommon.Durations.durationByKey
+import nonstdlib.Durations.callbackByKey
+import nonstdlib.Durations.durationByKey
 import java.time.Duration
 import java.util.concurrent.ConcurrentHashMap
 
