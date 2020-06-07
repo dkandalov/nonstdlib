@@ -1,10 +1,11 @@
+package nonstdlib
+
 import datsok.shouldEqual
-import nonstdlib.*
 import org.junit.Test
 import java.math.BigInteger
 import kotlin.random.Random
 
-class UtilTests {
+class Tests {
 
     @Test fun `iterator with skipped elements`() {
         listOf(1, 2, 3).skip(0).toList() shouldEqual listOf(1, 2, 3)

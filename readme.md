@@ -4,10 +4,10 @@
 Add dependency to `build.gradle`:
 ```
 repositories {
-	maven { url "https://dl.bintray.com/dkandalov/maven" }
+    maven { url "https://dl.bintray.com/dkandalov/maven" }
 }
 dependencies {
-	compile "nonstdlib:nonstdlib:0.1"
+    compile "nonstdlib:nonstdlib:0.1"
 }
 ```
 
