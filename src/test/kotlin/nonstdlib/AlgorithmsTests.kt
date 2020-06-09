@@ -69,4 +69,15 @@ class AlgorithmsTests {
             it shouldEqual mutableListOf(3, 2, 1)
         }
     }
+
+    @Test fun `numbers to binary string`() {
+        val byte: Byte = 17
+        byte.toBinaryString() shouldEqual "00010001"
+
+        val short: Short = 17
+        short.toBinaryString() shouldEqual "0000000000010001"
+
+        val int = 17
+        int.toBinaryString() shouldEqual "00000000000000000000000000010001"
+    }
 }

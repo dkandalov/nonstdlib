@@ -76,3 +76,9 @@ fun <T> MutableList<T>.swap(index1: Int, index2: Int) {
     this[index1] = this[index2]
     this[index2] = tmp
 }
+
+fun Byte.toBinaryString(): String = Integer.toBinaryString(this.toInt().and(0xFF)).padStart(8, '0')
+
+fun Short.toBinaryString(): String = Integer.toBinaryString(this.toInt().and(0xFFFF)).padStart(16, '0')
+
+fun Int.toBinaryString(): String = Integer.toBinaryString(this).padStart(32, '0')
