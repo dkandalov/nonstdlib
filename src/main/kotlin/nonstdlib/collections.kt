@@ -1,18 +1,33 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package nonstdlib
 
 import java.util.ArrayList
 
-fun byteArray(vararg bytes: Byte): ByteArray = bytes
-
-fun byteList(vararg bytes: Byte): List<Byte> = bytes.toList()
-
+/**
+ * Same as `joinToString` just a shorter name to type.
+ */
 fun <T> Iterable<T>.join(
     separator: CharSequence = ", ",
     prefix: CharSequence = "",
     postfix: CharSequence = "",
     limit: Int = -1,
+    truncated: CharSequence = "..."
+): String {
+    return joinBy(separator, prefix, postfix, limit, truncated, null)
+}
+
+/**
+ * Same as [join] but has different name so it doesn't show up first in auto-complete,
+ * see https://youtrack.jetbrains.com/issue/KT-30936
+ */
+fun <T> Iterable<T>.joinBy(
+    separator: CharSequence = ", ",
+    prefix: CharSequence = "",
+    postfix: CharSequence = "",
+    limit: Int = -1,
     truncated: CharSequence = "...",
-    transform: ((T) -> CharSequence)? = null
+    transform: ((T) -> CharSequence)?
 ): String {
     return joinToString(separator, prefix, postfix, limit, truncated, transform)
 }
@@ -28,10 +43,9 @@ fun <T> Iterable<T>.skip(n: Int): Iterable<T> {
     }
 }
 
-fun <T> Iterable<T>.tail(): Iterable<T> = drop(1)
+fun <T> Iterator<T>.toList() = asSequence().toList()
 
 fun <T> List<T>.tail(): List<T> = drop(1)
-
 
 fun <T, R> List<T>.chunkedBy(f: (T) -> R): List<List<T>> = asSequence().chunkedBy(f).toList()
 
