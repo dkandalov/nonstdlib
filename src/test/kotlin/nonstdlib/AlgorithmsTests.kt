@@ -6,7 +6,12 @@ import java.math.BigInteger
 import kotlin.random.Random
 
 class AlgorithmsTests {
-    @Test fun `factorial calculations for Int and Long`() {
+    @Test fun `power functions`() {
+        3.pow(4) shouldEqual 81
+        3L.pow(4L) shouldEqual 81L
+    }
+
+    @Test fun `factorial for Int and Long`() {
         val input = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
         val factorials = listOf(1, 1, 2, 6, 24, 120, 720, 5040, 40320)
 
@@ -15,7 +20,7 @@ class AlgorithmsTests {
         input.map { it.factorial() } shouldEqual factorials.map(Int::toBigInteger)
     }
 
-    @Test fun `factorial calculations for BigInteger`() {
+    @Test fun `factorial for BigInteger`() {
         100.toBigInteger().factorial() shouldEqual BigInteger("93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000")
     }
 
@@ -51,6 +56,17 @@ class AlgorithmsTests {
         Random.listOfInts(sizeRange = 0..10, valuesRange = 0..10).let { list ->
             (list.size in 0..10) shouldEqual true
             list.all { it in 0..10 }
+        }
+    }
+
+    @Test fun `swap collection items`() {
+        arrayOf(1, 2, 3).let {
+            it.swap(0, 2)
+            it shouldEqual arrayOf(3, 2, 1)
+        }
+        mutableListOf(1, 2, 3).let {
+            it.swap(0, 2)
+            it shouldEqual mutableListOf(3, 2, 1)
         }
     }
 }

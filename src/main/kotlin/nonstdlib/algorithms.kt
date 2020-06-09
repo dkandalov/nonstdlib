@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package nonstdlib
 
 import java.math.BigInteger
@@ -49,18 +51,6 @@ fun <E> List<E>.permutationsSequence(): Sequence<List<E>> = sequence {
     }
 }
 
-fun <T> Array<T>.swap(index1: Int, index2: Int) {
-    val tmp = this[index1]
-    this[index1] = this[index2]
-    this[index2] = tmp
-}
-
-fun <T> MutableList<T>.swap(index1: Int, index2: Int) {
-    val tmp = this[index1]
-    this[index1] = this[index2]
-    this[index2] = tmp
-}
-
 fun Random.listOfInts(
     size: Int = -1,
     sizeRange: IntRange = IntRange.EMPTY,
@@ -73,4 +63,16 @@ fun Random.listOfInts(
         result.add(nextInt(valuesRange))
     }
     return result
+}
+
+fun <T> Array<T>.swap(index1: Int, index2: Int) {
+    val tmp = this[index1]
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
+
+fun <T> MutableList<T>.swap(index1: Int, index2: Int) {
+    val tmp = this[index1]
+    this[index1] = this[index2]
+    this[index2] = tmp
 }
