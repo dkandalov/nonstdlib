@@ -18,7 +18,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
 	testImplementation("junit:junit:4.12")
-	testImplementation("datsok:datsok:0.1")
+	testImplementation("datsok:datsok:0.2")
 }
 
 tasks.withType<KotlinCompile>().configureEach {

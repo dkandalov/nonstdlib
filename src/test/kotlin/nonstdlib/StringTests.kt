@@ -8,6 +8,5 @@ class StringTests {
         "abcde".size shouldEqual 5
         "abcde".tail() shouldEqual "bcde"
         "abcde" * 2 shouldEqual "abcdeabcde"
-
     }
 }

@@ -17,6 +17,7 @@ fun println(first: Any, second: Any, vararg rest: Any) {
 @Suppress("unused")
 inline fun <T, R> T.ifNotNull(f: (T) -> R) = this?.let(f)
 
+inline fun <T> T.with(block: (T) -> Unit): T = also(block)
 
 private fun Any?.toPrintableString(): String =
     when (this) {
