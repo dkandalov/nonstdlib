@@ -66,11 +66,22 @@ fun <T, R> Sequence<T>.chunkedBy(f: (T) -> R): Sequence<List<T>> = sequence {
     if (list.isNotEmpty()) yield(list)
 }
 
-inline fun <T : Number> Iterable<T>.sumAsLong(): Long =
-    sumAsLongBy { it.toLong() }
-
-inline fun <T> Iterable<T>.sumAsLongBy(selector: (T) -> Long): Long {
+/**
+ * Similar to [sumByDouble].
+ */
+inline fun <T> Iterable<T>.sumByLong(selector: (T) -> Long): Long {
     var sum = 0L
+    for (element in this) {
+        sum += selector(element)
+    }
+    return sum
+}
+
+/**
+ * Similar to [sumByDouble].
+ */
+inline fun <T> Array<out T>.sumByLong(selector: (T) -> Long): Long {
+    var sum: Long = 0
     for (element in this) {
         sum += selector(element)
     }

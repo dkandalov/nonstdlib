@@ -41,7 +41,7 @@ class CollectionsTests {
     }
 
     @Test fun `sum collection as Long`() {
-        listOf(Int.MAX_VALUE, Int.MAX_VALUE).sumAsLong() shouldEqual 4294967294L
-        listOf(Int.MAX_VALUE, Int.MAX_VALUE).sumAsLongBy { it + 1L } shouldEqual 4294967296L
+        listOf(Int.MAX_VALUE, Int.MAX_VALUE).sumByLong { it.toLong() } shouldEqual 4294967294L
+        arrayOf(Int.MAX_VALUE, Int.MAX_VALUE).sumByLong { it.toLong() } shouldEqual 4294967294L
     }
 }
