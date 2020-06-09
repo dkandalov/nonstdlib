@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package nonstdlib
 
 import java.io.*
@@ -18,7 +20,6 @@ fun println(first: Any, second: Any, vararg rest: Any) {
     println((listOf(first, second) + rest).joinToString(", ") { it.toPrintableString() })
 }
 
-@Suppress("unused")
 inline fun <T, R> T.ifNotNull(f: (T) -> R) = this?.let(f)
 
 inline fun <T> T.with(block: (T) -> Unit): T = also(block)
@@ -33,8 +34,10 @@ inline fun <T> T.with(block: (T) -> Unit): T = also(block)
  * }.exhaustive // will enforce compilation error
  * ```
  */
-@Suppress("unused")
 val Unit.exhaustive get() = this
+
+fun environmentVariable(name: String): String =
+    System.getenv(name) ?: error("Could not find environment variable '$name'")
 
 fun Throwable.toStringStacktrace() = this.let {
     val stringWriter = StringWriter()
@@ -42,14 +45,12 @@ fun Throwable.toStringStacktrace() = this.let {
     stringWriter.toString()
 }
 
-@Suppress("unused")
 inline fun <reified T> T.resourceStream(path: String): InputStream =
     T::class.java.getResourceAsStream(path)
 
 inline fun <reified T> T.resourceReader(path: String, charset: Charset = UTF_8): InputStreamReader =
     resourceStream(path).reader(charset)
 
-@Suppress("unused")
 fun findFreePort(): Int {
     try {
         ServerSocket(0).use { socket -> return socket.localPort }
