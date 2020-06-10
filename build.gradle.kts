@@ -7,7 +7,7 @@ plugins {
     `maven-publish`
 }
 group = "nonstdlib"
-version = "0.2"
+version = "0.3"
 
 repositories {
 	mavenCentral()
