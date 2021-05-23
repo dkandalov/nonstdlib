@@ -19,6 +19,7 @@ class CollectionsTests {
         listOf(1, 2, 3).skip(1).toList() shouldEqual listOf(2, 3)
         listOf(1, 2, 3).skip(2).toList() shouldEqual listOf(3)
         listOf(1, 2, 3).skip(3).toList() shouldEqual listOf()
+        listOf(1, 2, 3).skip(4).toList() shouldEqual listOf()
     }
 
     @Test fun `chunk list according to selector function`() {
@@ -43,5 +44,21 @@ class CollectionsTests {
     @Test fun `sum collection as Long`() {
         listOf(Int.MAX_VALUE, Int.MAX_VALUE).sumByLong { it.toLong() } shouldEqual 4294967294L
         arrayOf(Int.MAX_VALUE, Int.MAX_VALUE).sumByLong { it.toLong() } shouldEqual 4294967294L
+    }
+
+    @Test fun `flip map entries`() {
+        emptyMap<Int, String>().flip() shouldEqual emptyMap()
+
+        mapOf(
+            1 to "a",
+            2 to "b",
+            3 to "c"
+        ).flip() shouldEqual mapOf(
+            "a" to 1,
+            "b" to 2,
+            "c" to 3
+        )
+
+        mapOf(1 to "a", 2 to "a").flip() shouldEqual mapOf("a" to 2)
     }
 }

@@ -33,8 +33,8 @@ class MiscTests {
     }
 
     @Test fun `reading resource`() {
-        resourceStream("/nonstdlib/MiscKt.class").readAllBytes().isNotEmpty() shouldEqual true
-        resourceReader("/nonstdlib/MiscKt.class").readLines().isNotEmpty() shouldEqual true
+        resourceStream("/nonstdlib/MiscKt.class")?.readAllBytes()?.isNotEmpty() shouldEqual true
+        resourceReader("/nonstdlib/MiscKt.class")?.readLines()?.isNotEmpty() shouldEqual true
     }
 
     private class SystemOutFixture {

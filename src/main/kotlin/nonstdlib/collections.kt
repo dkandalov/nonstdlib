@@ -33,9 +33,12 @@ fun <T> Iterable<T>.joinBy(
 }
 
 fun <T> Iterable<T>.skip(n: Int): Iterable<T> {
+    require(n >= 0) { "Requested element count $n is less than zero." }
+    if (n == 0) return this
+
     val iterator = iterator()
-    repeat(times = n) {
-        if (!iterator.hasNext()) throw IllegalStateException()
+    var i = n
+    while (iterator.hasNext() && i-- > 0) {
         iterator.next()
     }
     return object : Iterable<T> {
@@ -87,3 +90,6 @@ inline fun <T> Array<out T>.sumByLong(selector: (T) -> Long): Long {
     }
     return sum
 }
+
+fun <K, V> Map<K, V>.flip(): Map<V, K> =
+    entries.associate { (key, value) -> value to key }

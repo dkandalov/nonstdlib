@@ -1,0 +1,52 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.32'
+    id 'ivy-publish'
+}
+group = "nonstdlib"
+version = "0.3"
+
+repositories {
+	mavenCentral()
+    ivy {
+        artifactPattern("https://raw.githubusercontent.com/dkandalov/datsok/master/jars/[artifact]-[revision](.[ext])")
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+	testImplementation "junit:junit:4.13.2"
+	testImplementation "datsok:datsok:0.5"
+}
+
+compileKotlin.kotlinOptions.jvmTarget = "11"
+compileTestKotlin.kotlinOptions.jvmTarget = "11"
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        ivy(IvyPublication) {
+            from components.java
+        }
+    }
+}
+
+task publishJars(dependsOn:[build, generateDescriptorFileForIvyPublication]) {
+    doLast {
+        ant.copy(
+            file:"build/libs/nonstdlib-${version}.jar",
+            toFile:"jars/nonstdlib-${version}.jar"
+        )
+        ant.copy(
+            file:"build/libs/nonstdlib-${version}-sources.jar",
+            toFile:"jars/nonstdlib-${version}-sources.jar"
+        )
+        ant.copy(
+            file:"build/publications/ivy/ivy.xml",
+            toFile:"jars/ivy-${version}.xml"
+        )
+    }
+}

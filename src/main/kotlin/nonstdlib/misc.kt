@@ -39,17 +39,20 @@ val Unit.exhaustive get() = this
 fun environmentVariable(name: String): String =
     System.getenv(name) ?: error("Could not find environment variable '$name'")
 
+/**
+ * Available in Kotlin 1.4 as `Throwable.stackTraceToString()`
+ */
 fun Throwable.toStringStacktrace() = this.let {
     val stringWriter = StringWriter()
     it.printStackTrace(PrintWriter(stringWriter))
     stringWriter.toString()
 }
 
-inline fun <reified T> T.resourceStream(path: String): InputStream =
+inline fun <reified T> T.resourceStream(path: String): InputStream? =
     T::class.java.getResourceAsStream(path)
 
-inline fun <reified T> T.resourceReader(path: String, charset: Charset = UTF_8): InputStreamReader =
-    resourceStream(path).reader(charset)
+inline fun <reified T> T.resourceReader(path: String, charset: Charset = UTF_8): InputStreamReader? =
+    resourceStream(path)?.reader(charset)
 
 fun findFreePort(): Int {
     try {
