@@ -1,21 +1,20 @@
 [![Build Status](https://travis-ci.org/dkandalov/nonstdlib.svg?branch=master)](https://travis-ci.org/dkandalov/nonstdlib)
 
-### Step 1
+### Examples
+```
+(1 + 2).printed()
+```
+
+### Adding Gradle dependency
 Add dependency to `build.gradle`:
 ```
 repositories {
-    maven { url "https://dl.bintray.com/dkandalov/maven" }
+    mavenCentral()
+    ivy {
+        artifactPattern("https://raw.githubusercontent.com/dkandalov/nonstdlib/master/jars/[artifact]-[revision](.[ext])")
+    }
 }
 dependencies {
     compile "nonstdlib:nonstdlib:0.1"
 }
 ```
-
-### Step 2
-Use code from `nonstdlib` package, e.g.
-```
-(1 + 2).printed()
-```
-
-### Step 3
-Profit! 💸
